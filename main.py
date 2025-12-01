@@ -10,12 +10,14 @@ import datetime
 # Load .env file
 load_dotenv()
 
+# function to make jarvis speak.
 def say(text):
     engine = pyttsx3.init()
     engine.say(text)
     print(f'jarvis: {text}')
     engine.runAndWait()
     
+# function to make jarvis wish/gather/
 def wishMe():
     hour = int(datetime.datetime.now().hour)
     if hour>=4 and hour<12:
@@ -28,6 +30,7 @@ def wishMe():
         say('good evening sir!')
     say('iam jarvis, how can i help you?')
 
+# function to make jarvis process the command
 def AIprocess(command):
     # Replace with your Gemini API key
     API_KEY = os.getenv("GEMINI_API_KEY")
@@ -40,6 +43,7 @@ def AIprocess(command):
     response = model.generate_content(prompt)
     return response.text
 
+# function to process tasks
 def processCommand(c):
     if "open google" in c.lower():
         webbrowser.open('https://www.google.com/')

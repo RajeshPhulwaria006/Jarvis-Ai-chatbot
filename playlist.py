@@ -15,5 +15,6 @@ musics = {
     "chand sifarish": "https://www.youtube.com/watch?v=0iKGtbmawpI",
     "kun faya kun": "https://www.youtube.com/watch?v=T94PHkuydcw&pp=ygUMa3VuIGZheWEga3Vu",
     "aafreen aafreen": "https://www.youtube.com/watch?v=kw4tT7SCmaY",
-    "aaj se teri": "https://www.youtube.com/watch?v=NFsEqOBG51M&list=RDNFsEqOBG51M&start_radio=1"
+    "aaj se teri": "https://www.youtube.com/watch?v=NFsEqOBG51M&list=RDNFsEqOBG51M&start_radio=1",
+    "pink lips": "https://www.youtube.com/watch?v=w5VFOKKAbQQ&list=RDw5VFOKKAbQQ&start_radio=1"
 }

@@ -20,6 +20,7 @@ Jarvis can chat like gemini/chatgpt, fetch Indian news, open popular websites, a
   - `play ajab si adaayien`
   - `play bulleya`
   - `play skyfall`
+  - `play chand sifarish`
   - `play illuminati`
   - (add more songs in `playlist` dictionary)
 
