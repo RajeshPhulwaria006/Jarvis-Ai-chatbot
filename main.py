@@ -37,7 +37,7 @@ def AIprocess(command):
     genai.configure(api_key=API_KEY)
 
     # Create a Gemini model instance
-    model = genai.GenerativeModel("gemini-1.5-flash")  # free, fast version
+    model = genai.GenerativeModel("gemini-2.5-pro")  # free, fast version
     prompt = f"You are Jarvis, a kind-hearted virtual assistant like Alexa or ChatGPT. Your owner is Rajesh aka Raj. User says: {command}"
        
     response = model.generate_content(prompt)
