@@ -37,8 +37,8 @@ def AIprocess(command):
     genai.configure(api_key=API_KEY)
 
     # Create a Gemini model instance
-    model = genai.GenerativeModel("gemini-2.5-pro")  # free, fast version
-    prompt = f"You are Jarvis, a kind-hearted virtual assistant like Alexa or ChatGPT. Your owner is Rajesh aka Raj. User says: {command}"
+    model = genai.GenerativeModel("gemini-3.5-flash")  # free, fast version
+    prompt = f"You are Jarvis, a kind-hearted virtual assistant like Alexa and ChatGPT. Your owner is Rajesh aka Raj. User says: {command}"
        
     response = model.generate_content(prompt)
     return response.text
@@ -47,6 +47,10 @@ def AIprocess(command):
 def processCommand(c):
     if "open google" in c.lower():
         webbrowser.open('https://www.google.com/')
+        say("opening google")
+
+    if "open github" in c.lower():
+        webbrowser.open('https://www.github.com/RajeshPhulwaria006/')
         say("opening google")
     
     elif "open youtube" in c.lower():
@@ -72,7 +76,7 @@ def processCommand(c):
     elif c.lower().startswith("play"):
         parts = c.lower().split(" ", 1)  # split only once at the first space
         if len(parts) > 1:  
-            song = parts[1].strip()  # everything after "play"
+            song = " ".join(parts[1].split())  # clear unwanted spaces
             
             if song in playlist.musics:  
                 link = playlist.musics[song]
@@ -83,7 +87,6 @@ def processCommand(c):
         else:
             say("Please tell me which song to play.")
 
-        
     elif "say news" in c.lower():
         # Get News API key
         NEWS_API_KEY = os.getenv("NEWS_API_KEY")
@@ -102,7 +105,6 @@ def processCommand(c):
                 
         except requests.exceptions.RequestException as e:
             say("Error fetching news:", e)
-
 
     else:
         output = AIprocess(c)
