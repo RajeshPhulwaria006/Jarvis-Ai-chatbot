@@ -51,7 +51,7 @@ def processCommand(c):
 
     if "open github" in c.lower():
         webbrowser.open('https://www.github.com/RajeshPhulwaria006/')
-        say("opening google")
+        say("opening github")
     
     elif "open youtube" in c.lower():
         webbrowser.open('https://www.youtube.com/')
