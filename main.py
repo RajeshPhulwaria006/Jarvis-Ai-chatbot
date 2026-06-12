@@ -31,7 +31,7 @@ def processCommand(c):
     if c.lower().startswith("play"):
         parts = c.lower().split(" ", 1)  # split only once at the first space
         if len(parts) > 1:  
-            song = parts[1].strip()  # everything after "play"
+            song = " ".join(parts[1].split())  # clear unwanted spaces
             
             if song in playlist.musics:  
                 link = playlist.musics[song]
