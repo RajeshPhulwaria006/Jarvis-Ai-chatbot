@@ -22,12 +22,13 @@ def wishMe():
 
 # function to process tasks
 def processCommand(c):
-    for name, url in WEBSITES.items():
-        if f"open {name}" in c.lower():
-            webbrowser.open(url)
-            say(f"opening {name}")
-            break
-    
+    if c.lower().startswith('open'):
+        for name, url in WEBSITES.items():
+            if f"open {name}" in c.lower():
+                webbrowser.open(url)
+                say(f"opening {name}")
+                break
+        
     if c.lower().startswith("play"):
         parts = c.lower().split(" ", 1)  # split only once at the first space
         if len(parts) > 1:  
