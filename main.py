@@ -51,6 +51,9 @@ def processCommand(c):
         else:
             output = AIprocess(c)
             say(output)
+    
+    else:
+        say(AIprocess(c))
                 
 if __name__ == '__main__':
     wishMe()
