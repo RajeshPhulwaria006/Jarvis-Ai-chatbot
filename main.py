@@ -36,7 +36,7 @@ def processCommand(c):
             
             if song in playlist.musics:  
                 link = playlist.musics[song]
-                say("playing.")
+                say(f"playing {song}.")
                 webbrowser.open(link)
             else:
                 say(f"Song '{song}' not found in playlist.")
@@ -46,11 +46,8 @@ def processCommand(c):
     elif "news" in c.lower():
         say("Here are today's top headlines.")
 
-        for headline in get_news():
+        for headline in get_news(limit=10):
             say(headline)
-        else:
-            output = AIprocess(c)
-            say(output)
     
     else:
         say(AIprocess(c))

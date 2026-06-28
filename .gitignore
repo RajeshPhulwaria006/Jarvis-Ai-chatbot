@@ -3,7 +3,7 @@ __pycache__/
 *.pyc
 
 # Virtual environment
-venv/
+.venv/
 
 # API keys & env files
 .env
