@@ -1,8 +1,8 @@
 # 🤖 Jarvis AI Assistant
 
-**A modular AI-powered virtual assistant built with Python and Google Gemini.**
+**A modular AI-powered virtual assistant built with Python, Google Gemini, and SQLite-powered persistent memory.**
 
-Jarvis is an extensible desktop AI assistant capable of natural conversations, web automation, media playback, and real-time news retrieval. The project is designed with scalability in mind, making it easy to integrate additional AI capabilities, APIs, and desktop automation features.
+Jarvis is an extensible desktop AI assistant capable of natural conversations, remembering previous conversations, web automation, media playback, and real-time news retrieval. The project is designed with scalability in mind, making it easy to integrate additional AI capabilities, APIs, desktop automation, and long-term AI memory.
 
 ---
 
@@ -10,10 +10,30 @@ Jarvis is an extensible desktop AI assistant capable of natural conversations, w
 
 ### 🧠 AI Assistant
 
-* Powered by **Google Gemini 3.5 Flash**
-* Context-aware conversational responses
-* Intelligent fallback when no predefined command matches
-* Easily extensible for future AI tool/function calling
+- Powered by **Google Gemini 3.5 Flash**
+- Context-aware conversational responses
+- Intelligent fallback when no predefined command matches
+- Easily extensible for future AI tool/function calling
+
+---
+
+### 💾 Persistent Conversation Memory
+
+Jarvis now remembers previous conversations using a **SQLite database**, enabling more natural and context-aware interactions across sessions.
+
+Features:
+
+- Stores every user and AI message locally
+- Automatically loads recent conversation history
+- Maintains conversational context between sessions
+- Lightweight and offline-friendly using SQLite
+- Easily extendable for long-term user preferences and semantic memory
+
+Database location:
+
+```text
+database/memory.db
+```
 
 ---
 
@@ -81,9 +101,9 @@ say news
 
 Features:
 
-* Latest Indian headlines
-* Network error handling
-* Configurable number of headlines
+- Latest Indian headlines
+- Network error handling
+- Configurable number of headlines
 
 ---
 
@@ -99,8 +119,8 @@ Environment variables are managed through:
 
 Examples:
 
-* Gemini API Key
-* News API Key
+- Gemini API Key
+- News API Key
 
 ---
 
@@ -118,9 +138,14 @@ Jarvis-AI/
 │   ├── assistant.py
 │   ├── news.py
 │   └── __init__.py
-|
+│
 ├── utils/
 │   ├── speech.py
+│   └── __init__.py
+│
+├── database/
+│   ├── build.py
+│   ├── memory.db
 │   └── __init__.py
 │
 ├── .env
@@ -169,31 +194,26 @@ python main.py
 
 ## 💻 Technologies Used
 
-* Python
-* Google Gemini API
-* Requests
-* pyttsx3
-* python-dotenv
-* Web Browser Automation
+- Python
+- Google Gemini API
+- SQLite
+- Requests
+- pyttsx3
+- python-dotenv
+- Web Browser Automation
 
 ---
 
-## 🚀 Future Roadmap
+## 🧠 How Conversation Memory Works
 
-* Voice Recognition (Speech-to-Text)
-* Wake Word Detection
-* Conversation Memory
-* Desktop Automation
-* Weather Integration
-* WhatsApp Automation
-* Email Automation
-* Calendar & Reminders
-* Local File Search
-* AI Tool Calling
-* GUI/Desktop Interface
-* RAG (Retrieval-Augmented Generation)
-* Multi-Agent Support
-* Feel free to reach out for more suggetions and updatations
+1. Every user message is stored in a local SQLite database.
+2. Every AI response is also saved.
+3. Before generating a new response, Jarvis retrieves recent conversation history.
+4. The previous messages are sent to Gemini along with the current prompt.
+5. Gemini generates responses while maintaining conversational context.
+
+This allows Jarvis to remember recent discussions even after restarting the application.
+
 ---
 
 ## 🤝 Contributing

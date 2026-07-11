@@ -17,5 +17,9 @@ musics = {
     "aafreen aafreen": "https://www.youtube.com/watch?v=kw4tT7SCmaY",
     "aaj se teri": "https://www.youtube.com/watch?v=NFsEqOBG51M&list=RDNFsEqOBG51M&start_radio=1",
     "pink lips": "https://www.youtube.com/watch?v=w5VFOKKAbQQ&list=RDw5VFOKKAbQQ&start_radio=1",
-    "channa mereya": "https://www.youtube.com/watch?v=bzSTpdcs-EI&list=RDbzSTpdcs-EI&start_radio=1"
+    "channa mereya": "https://www.youtube.com/watch?v=bzSTpdcs-EI&list=RDbzSTpdcs-EI&start_radio=1",
+    "i saw a face": "https://www.youtube.com/watch?v=pyGU-UudvrM&list=RDGMEM6ijAnFTG9nX1G-kbWBUCJAVMpyGU-UudvrM&start_radio=1",
+    "arz kiya hai": "https://www.youtube.com/watch?v=bP8ATWCvqzw&list=RDbP8ATWCvqzw&start_radio=1",
+    "tum tak": "https://www.youtube.com/watch?v=_vFaCY9XaIQ&list=RD_vFaCY9XaIQ&start_radio=1",
+    "pehli baar": "https://www.youtube.com/watch?v=DAzqrQxlXTs&list=RDDAzqrQxlXTs&start_radio=1"
 }
