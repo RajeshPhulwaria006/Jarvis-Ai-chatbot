@@ -7,3 +7,7 @@ __pycache__/
 
 # API keys & env files
 .env
+
+# secure database
+database/memory.db
+*.db
