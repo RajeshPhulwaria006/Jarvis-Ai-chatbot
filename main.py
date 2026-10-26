@@ -45,9 +45,8 @@ def processCommand(c):
 
     elif "news" in c.lower():
         say("Here are today's top headlines.")
-
-        for headline in get_news(limit=10):
-            say(headline)
+        for i, headlines in enumerate(get_news.invoke({"limit":5})):
+            say(f"{i+1}. {headlines}")
     
     else:
         say(AIprocess(c))

@@ -1,40 +1,52 @@
-import os
 import requests
-from dotenv import load_dotenv
+from langchain_core.tools import tool
 from config import NEWS_API_KEY
 
-URL = (
-    f"https://api.worldnewsapi.com/search-news"
-    f"?api-key={NEWS_API_KEY}"
-    f"&source-countries=in"
-    f"&language=en"
-)
+URL = "https://api.worldnewsapi.com/search-news"
 
-def get_news(limit=5):
-    """Fetch the latest Indian news headlines."""
+
+@tool
+def get_news(limit: int = 5) -> str:
+    """Fetch the latest English-language news articles from India.
+    Use this tool when the user asks for Indian news headlines or updates.
+    Args:
+        limit: Number of headlines to return, between 1 and 10 (default 5).
+    """
+    limit = max(1, min(limit, 10))
 
     try:
-        response = requests.get(URL, timeout=10)
+        response = requests.get(
+            URL,
+            params={
+                "api-key": NEWS_API_KEY,
+                "source-countries": "in",
+                "language": "en",
+                "number": limit,
+                "sort": "publish-time",
+                "sort-direction": "DESC",
+            },
+            timeout=10,
+        )
         response.raise_for_status()
 
-        data = response.json()
-        articles = data.get("news", [])
-
-        if not articles:
-            return ["Sorry, I couldn't find any news at the moment."]
+        articles = response.json().get("news", [])
 
         headlines = [
             article["title"]
-            for article in articles[:limit]
+            for article in articles
             if article.get("title")
         ]
+
+        if not headlines:
+            return "Sorry, I couldn't find any news at the moment."
+
         return headlines
 
     except requests.exceptions.Timeout:
-        return ["The news service is taking too long to respond."]
+        return "The news service timed out. Please try again."
 
     except requests.exceptions.ConnectionError:
-        return ["Unable to connect to the internet."]
+        return "Unable to connect to the news service."
 
-    except requests.exceptions.RequestException:
-        return ["Something went wrong while fetching the news."]
+    except requests.exceptions.RequestException as e:
+        return f"Failed to fetch news: {e}"
