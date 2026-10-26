@@ -1,7 +1,7 @@
 from utils.speech import say
 from tools.news import get_news
 from database.build import Database
-import assets.playlist as musics
+from assets.playlist import musics
 from assets.websites import WEBSITES
 from config import GROQ_API_KEY
 
@@ -171,6 +171,9 @@ if __name__ == '__main__':
     while True:
         try:
             command = input("you :")
-            processCommand(command)
+            isExit = processCommand(command)
+            if isExit:
+                break
+            
         except Exception as e:
             print("error: ", format(e))
