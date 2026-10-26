@@ -7,7 +7,6 @@ from config import GROQ_API_KEY
 
 from langchain_groq import ChatGroq
 from langchain.agents import create_agent
-from langchain_core.prompts import PromptTemplate
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
 import webbrowser
@@ -163,7 +162,7 @@ if __name__ == '__main__':
     agent = create_agent(
         model=llm,
         tools=[get_news],
-        system_prompt=SYSTEM_PROMPT,
+        system_prompt=SystemMessage(content=SYSTEM_PROMPT),
     )
     
     wishMe()
@@ -174,6 +173,6 @@ if __name__ == '__main__':
             isExit = processCommand(command)
             if isExit:
                 break
-            
+
         except Exception as e:
             print("error: ", format(e))

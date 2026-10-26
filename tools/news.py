@@ -6,7 +6,7 @@ URL = "https://api.worldnewsapi.com/search-news"
 
 
 @tool
-def get_news(limit: int = 5) -> str:
+def get_news(limit: int = 5) -> list:
     """Fetch the latest English-language news articles from India.
     Use this tool when the user asks for Indian news headlines or updates.
     Args:
@@ -40,8 +40,11 @@ def get_news(limit: int = 5) -> str:
         if not headlines:
             return "Sorry, I couldn't find any news at the moment."
 
-        return headlines
-
+        return "\n".join(
+            f"{i}. {title}"
+            for i, title in enumerate(headlines, start=1)
+        )
+    
     except requests.exceptions.Timeout:
         return "The news service timed out. Please try again."
 
