@@ -1,10 +1,14 @@
 import os
 from config import GROQ_API_KEY
 from database.build import Database
+from .news import get_news
 
 from langchain_groq import ChatGroq
 from langchain_core.prompts import PromptTemplate
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
+
+from langchain.agents import create_agent
+
 
 db = Database()
 
@@ -48,6 +52,14 @@ def AIprocess(command: str) -> str:
         llm = ChatGroq(
             model="openai/gpt-oss-120b",
             temperature=0.7,
+        )
+        # Create the agent manually with the system prompt
+        agent = create_agent(
+            model=llm,
+            tools=[get_news],
+            system_prompt=(
+                "You are a helpful assistant. "
+            )
         )
 
         # Add system instructions
