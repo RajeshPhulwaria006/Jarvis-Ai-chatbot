@@ -1,5 +1,6 @@
 from utils.speech import say
 from tools.news import get_news
+from tools.weather import get_weather
 from database.build import Database
 from assets.playlist import musics
 from assets.websites import WEBSITES
@@ -45,7 +46,6 @@ def build_messages(user_message: str, db) -> list:
 # function to process command
 def AIprocess(command: str) -> str:
     """Process a command using the Jarvis agent and conversation history."""
-
     try:
         messages = build_messages(command, db)
 
@@ -73,7 +73,6 @@ def AIprocess(command: str) -> str:
 # function to handle commands to play or open external links
 def processCommand(command: str):
     """Handle direct actions first, then delegate to the AI agent."""
-
     text = command.strip().lower()
 
     if not text:
@@ -161,7 +160,7 @@ if __name__ == '__main__':
 
     agent = create_agent(
         model=llm,
-        tools=[get_news],
+        tools=[get_news, get_weather],
         system_prompt=SystemMessage(content=SYSTEM_PROMPT),
     )
     
