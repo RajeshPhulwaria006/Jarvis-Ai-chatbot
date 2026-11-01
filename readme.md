@@ -23,6 +23,8 @@ The project is evolving from a command-based assistant into a more capable tool-
 | LLM provider | Groq |
 | Agent framework | LangChain |
 | News source | WorldNewsAPI |
+| Weather source | Open-meteo|
+| Web Search | Duck Duck Go |
 | Database | SQLite |
 | Text-to-speech | pyttsx3 |
 | HTTP requests | Requests |
@@ -57,10 +59,10 @@ Command Router (processCommand)
          |
          +-- Groq language model
          |
-         +-- News tool
-         |      |
-         |      v
-         |   WorldNewsAPI
+         +-- News tool -+- Weather tool -+- Math tool -+- Searching tool
+         |      |             |               |                |
+         |      v             v               v                v
+         |   get_news    get_weather    math_calculator    web_search
          |
          v
     Assistant response
@@ -86,8 +88,12 @@ Command Router (processCommand)
 ├── tools
 │   ├── __init__.py
 │   └── news.py             # WorldNewsAPI integration as an agent tool
+│   ├── mathematics.py      # Deterministic math expression tool
+│   ├── weather.py          # Weather integration tool for weather updates
+│   └── web_search.py       # DuckDuckGo integration tool to browse searches / current affairs
 ├── utils
 │   ├── __init__.py
+│   ├── system_prompt.py
 │   └── speech.py           # Text-to-speech utility
 ├── .gitignore
 ├── config.py               # Environment variable configuration
