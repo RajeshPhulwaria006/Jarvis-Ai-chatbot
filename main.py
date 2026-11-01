@@ -1,6 +1,5 @@
 from utils.speech import say
-from tools.news import get_news
-from tools.weather import get_weather
+from tools import get_news, get_weather, math_calculator
 from database.build import Database
 from assets.playlist import musics
 from assets.websites import WEBSITES
@@ -160,7 +159,7 @@ if __name__ == '__main__':
 
     agent = create_agent(
         model=llm,
-        tools=[get_news, get_weather],
+        tools=[get_news, get_weather, math_calculator],
         system_prompt=SystemMessage(content=SYSTEM_PROMPT),
     )
     
