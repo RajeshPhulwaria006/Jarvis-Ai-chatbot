@@ -1,4 +1,4 @@
-from utils.speech import say
+from utils.speech import say, listen
 from tools import get_news, get_weather, math_calculator, web_search
 from database.build import Database
 from assets.playlist import musics
@@ -10,8 +10,11 @@ from langchain_groq import ChatGroq
 from langchain.agents import create_agent
 from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
+import os
 import webbrowser
 import datetime
+
+VOICE_MODE = os.getenv("JARVIS_VOICE_MODE", "false").lower() in {"1", "true", "yes", "on"}
 
 # function to make jarvis wish/gather/
 def wishMe():
@@ -159,13 +162,26 @@ if __name__ == '__main__':
     )
     
     wishMe()
-    print("Start you conversation: ")
+    # voice assisted commands
+    if VOICE_MODE:
+        print("Voice mode enabled. Speak after the listening prompt; say 'exit' to quit.")
+    else:
+        print("Typed mode enabled. Set JARVIS_VOICE_MODE=true for microphone input.")
+
     while True:
         try:
-            command = input("you :")
-            isExit = processCommand(command)
-            if isExit:
-                break
+            if VOICE_MODE:
+                command = listen()
+                if not command:
+                    continue
+            else:
+                command = input("You: ")
 
-        except Exception as e:
-            print("error: ", format(e))
+            is_exit = processCommand(command)
+            if is_exit == "exit":
+                break
+        except KeyboardInterrupt:
+            print("\nJarvis stopped.")
+            break
+        except Exception as exc:
+            print(f"Jarvis runtime error: {exc}")
