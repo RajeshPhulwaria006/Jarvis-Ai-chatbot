@@ -252,9 +252,24 @@ def _speak_local(text: str) -> bool:
         return False
 
 
+def clean_for_speech(text: str) -> str:
+    """Convert common Markdown formatting into speech-friendly text."""
+    text = re.sub(r"```[\s\S]*?```", " ", text)
+    text = re.sub(r"`([^`]*)`", r"\1", text)
+    text = re.sub(r"\*\*(.*?)\*\*", r"\1", text)
+    text = re.sub(r"__(.*?)__", r"\1", text)
+    text = re.sub(r"(?<!\w)[*_]([^*_]+)[*_](?!\w)", r"\1", text)
+    text = re.sub(r"^\s{0,3}#{1,6}\s*", "", text, flags=re.MULTILINE)
+    text = re.sub(r"^\s*[-•]\s+", "", text, flags=re.MULTILINE)
+    text = re.sub(r"^\s*\d+[.)]\s+", "", text, flags=re.MULTILINE)
+    text = re.sub(r"https?://\S+", " link ", text)
+    text = re.sub(r"[*_~#|>`]", "", text)
+    text = re.sub(r"\s+", " ", text)
+    return text.strip()
+
 def say(text: str) -> None:
     """Speak using Edge neural TTS; fall back to pyttsx3 on failure."""
-    text = str(text).strip()
+    text = clean_for_speech(text.strip())
     if not text:
         return
 

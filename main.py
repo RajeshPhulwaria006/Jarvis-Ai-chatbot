@@ -1,8 +1,13 @@
 from utils.speech import say, listen
-from tools import get_news, get_weather, math_calculator, web_search
+from tools import (
+    get_news,
+    get_weather, 
+    math_calculator, 
+    web_search,
+    play_music,
+    open_sites
+)
 from database.build import Database
-from assets.playlist import musics
-from assets.websites import WEBSITES
 from config import GROQ_API_KEY
 from utils import SYSTEM_PROMPT
 
@@ -78,8 +83,7 @@ def processCommand(command: str):
     """Handle direct actions first, then delegate to the AI agent."""
     text = command.strip().lower()
 
-    if not text:
-        return
+    if not text: return
 
     # Exit commands
     if text in ("exit", "quit", "goodbye", "stop jarvis"):
@@ -90,56 +94,57 @@ def processCommand(command: str):
     if "clear memory" in text.lower():
             db.clear_history()
             say("Memory cleared successfully.")
+            return
 
-    # Open a website
-    if text.startswith("open "):
-        site_name = text[5:].strip()
+    # # Open a website
+    # if text.startswith("open "):
+    #     site_name = text[5:].strip()
 
-        # Match website names case-insensitively.
-        matched_site = next(
-            (
-                (name, url)
-                for name, url in WEBSITES.items()
-                if name.lower() == site_name
-            ),
-            None,
-        )
+    #     # Match website names case-insensitively.
+    #     matched_site = next(
+    #         (
+    #             (name, url)
+    #             for name, url in WEBSITES.items()
+    #             if name.lower() == site_name
+    #         ),
+    #         None,
+    #     )
 
-        if matched_site:
-            name, url = matched_site
-            webbrowser.open(url)
-            reply = f"Opening {name}."
-        else:
-            reply = f"Sorry, {site_name} is not in your website list."
+    #     if matched_site:
+    #         name, url = matched_site
+    #         webbrowser.open(url)
+    #         reply = f"Opening {name}."
+    #     else:
+    #         reply = f"Sorry, {site_name} is not in your website list."
 
-        say(reply)
-        return
+    #     say(reply)
+    #     return
 
-    # Play a song
-    if text.startswith("play "):
-        song_name = " ".join(text[5:].split())
+    # # Play a song
+    # if text.startswith("play "):
+    #     song_name = " ".join(text[5:].split())
 
-        matched_song = next(
-            (
-                (name, url)
-                for name, url in musics.items()
-                if name.lower() == song_name
-            ),
-            None,
-        )
+    #     matched_song = next(
+    #         (
+    #             (name, url)
+    #             for name, url in musics.items()
+    #             if name.lower() == song_name
+    #         ),
+    #         None,
+    #     )
 
-        if matched_song:
-            name, url = matched_song
-            webbrowser.open(url)
-            reply = f"Playing {name}."
-        else:
-            reply = (
-                f"Sorry, I couldn't find {song_name} "
-                "in your playlist."
-            )
+    #     if matched_song:
+    #         name, url = matched_song
+    #         webbrowser.open(url)
+    #         reply = f"Playing {name}."
+    #     else:
+    #         reply = (
+    #             f"Sorry, I couldn't find {song_name} "
+    #             "in your playlist."
+    #         )
             
-        say(reply)
-        return
+    #     say(reply)
+    #     return
 
     # All other requests go to LangChain.
     reply = AIprocess(command)
@@ -149,6 +154,17 @@ def processCommand(command: str):
 if __name__ == '__main__':
 
     db = Database()
+    WAKE_PHRASES = {
+        "wake up jarvis",
+        "hey jarvis",
+        "wake up",
+    }
+
+    SLEEP_PHRASES = {
+        "go to sleep",
+        "sleep jarvis",
+        "stop listening",
+    }
 
     llm = ChatGroq(
         model="openai/gpt-oss-120b",
@@ -157,29 +173,44 @@ if __name__ == '__main__':
 
     agent = create_agent(
         model=llm,
-        tools=[get_news, get_weather, math_calculator, web_search],
+        tools=[get_news, get_weather, math_calculator, web_search, play_music, open_sites],
         system_prompt=SystemMessage(content=SYSTEM_PROMPT),
     )
     
     wishMe()
     # voice assisted commands
+    awake = False
     if VOICE_MODE:
-        print("Voice mode enabled. Speak after the listening prompt; say 'exit' to quit.")
+        print("Jarvis is sleeping. Say 'Wake up Jarvis' to activate.")
     else:
         print("Typed mode enabled. Set JARVIS_VOICE_MODE=true for microphone input.")
 
     while True:
         try:
             if VOICE_MODE:
-                command = listen()
+                command = listen().strip().lower()
                 if not command:
                     continue
+
+                if not awake:
+                    if any(phrase in command for phrase in WAKE_PHRASES):
+                        awake = True
+                        say("I'm awake. How can I help?")
+                    continue
+
+                if any(phrase in command for phrase in SLEEP_PHRASES):
+                    say("Going to sleep. Say wake up Jarvis when you need me.")
+                    awake = False
+                    continue
+
             else:
-                command = input("You: ")
+                command = input("You: ").strip()
 
             is_exit = processCommand(command)
+
             if is_exit == "exit":
                 break
+
         except KeyboardInterrupt:
             print("\nJarvis stopped.")
             break
