@@ -22,5 +22,6 @@ musics = {
     "arz kiya hai": "https://www.youtube.com/watch?v=bP8ATWCvqzw&list=RDbP8ATWCvqzw&start_radio=1",
     "tum tak": "https://www.youtube.com/watch?v=_vFaCY9XaIQ&list=RD_vFaCY9XaIQ&start_radio=1",
     "pehli baar": "https://www.youtube.com/watch?v=DAzqrQxlXTs",
-    "perfect":"https://youtu.be/2Vv-BfVoq4g?si=ePDwjNdJZxi14p4K"
+    "perfect":"https://youtu.be/2Vv-BfVoq4g?si=ePDwjNdJZxi14p4K",
+    "metamorphosis": "https://youtu.be/lJvRohYSrZM?si=Ajgzq98LxXtrfauE",
 }

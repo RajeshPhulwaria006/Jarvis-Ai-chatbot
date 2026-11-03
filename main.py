@@ -164,6 +164,7 @@ if __name__ == '__main__':
         "go to sleep",
         "sleep jarvis",
         "stop listening",
+        "you may sleep now"
     }
 
     llm = ChatGroq(
@@ -211,6 +212,9 @@ if __name__ == '__main__':
             if is_exit == "exit":
                 break
 
+            if awake and VOICE_MODE:
+                awake = False
+                
         except KeyboardInterrupt:
             print("\nJarvis stopped.")
             break
